@@ -18,19 +18,19 @@ public class Main_v2 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Please enter a fruit:");
-        String fruitName = scan.nextLine();
+        System.out.println("Please enter an ID:");
+        int id = scan.nextInt();
 
         // method that uses the API, it returns a JSON object
         // we aren't doing anything with the fruitInfo in this example.
-        JsonObject fruitInfo = getFruitInfo(fruitName);
+        JsonObject randomCatFact = getCatFact(id);
 
         scan.close();
     }
 
-    public static JsonObject getFruitInfo(String fruitName) {
+    public static JsonObject getCatFact(int factID) {
         // Constructing the URL for the API request
-        String url = "https://www.fruityvice.com/api/fruit/" + fruitName;
+        String url = "https://meowfacts.herokuapp.com/?id=" + factID;
 
         // Create an HTTP client object
         HttpClient client = HttpClient.newHttpClient();

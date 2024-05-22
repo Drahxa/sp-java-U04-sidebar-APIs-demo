@@ -14,38 +14,39 @@ public class Main_v1 {
         // get user input (integers)
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Please enter a fruit:");
-        String fruit = scan.nextLine();
+        System.out.println("Please enter an ID:");
+        int id = scan.nextInt();
+
+
 
         // display output
-        System.out.println("All about " + fruit + ":");
-        String fruitData = getFruitInfo(fruit);
-        System.out.println(fruitData);
+        String catFactData = returnFact(id);
+        System.out.println(catFactData);
 
     } // main() method closing
 
-    public static String getFruitInfo(String fruit){
-        // Constructing the url for the API request
-        String url = "https://www.fruityvice.com/api/fruit/" + fruit;
+    public static String returnFact(int id){
+            // Constructing the url for the API request
+            String url = "https://meowfacts.herokuapp.com/?id=" + id;
 
-        // Create an HTTP client object, so we can send a request
-        HttpClient client = HttpClient.newHttpClient();
+            // Create an HTTP client object, so we can send a request
+            HttpClient client = HttpClient.newHttpClient();
 
-        // Build an HTTP request
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .build();
+            // Build an HTTP request
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .build();
 
-        try {
-            // Send the request to the API, and get a response
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            // System.out.println("response:\n" + response);
-            // If there's an issue, check that response.statusCode() returns a 200
+            try {
+                // Send the request to the API, and get a response
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                // System.out.println("response:\n" + response);
+                // If there's an issue, check that response.statusCode() returns a 200
 
-            return response.body();
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return "Error: " + e.getMessage();
+                return response.body();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
         }
-    }
 }

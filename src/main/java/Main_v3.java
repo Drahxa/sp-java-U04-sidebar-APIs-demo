@@ -18,34 +18,28 @@ public class Main_v3 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Please enter a fruit:");
-        String fruitName = scan.nextLine();
+        System.out.println("Please enter an ID:");
+        int factID = scan.nextInt();
 
         // method that uses the API, it returns a JSON object
-        JsonObject fruitInfo = getFruitInfo(fruitName);
+        JsonObject catFact = getCatFact(factID);
 
-        if (fruitInfo != null){
+        if (catFact != null){
             // parse through the API response using the JSON package
-            String family = fruitInfo.get("family").getAsString();
+            String fact = catFact.get("data").getAsString();
 
             // We want to look at the nutritions specifically
-            JsonObject nutritions = fruitInfo.getAsJsonObject("nutritions");
-            double calories = nutritions.get("calories").getAsDouble();
-            double carbs = nutritions.get("carbohydrates").getAsDouble();
-            double protein = nutritions.get("protein").getAsDouble();
-            double fat = nutritions.get("fat").getAsDouble();
-            double sugar = nutritions.get("sugar").getAsDouble();
 
-            System.out.printf("%s is in the %s family:\n" +
-                            "Calories: %.2f, Carbohydrates: %.2f, Protein: %.2f, Fat: %.2f, Sugar: %.2f%n",
-                    fruitName, family, calories, carbs, protein, fat, sugar);
+            System.out.printf("\n\n\nFact #" + factID + " " + fact + "\n\n\n");
+
         }
         scan.close();
     }
 
-    public static JsonObject getFruitInfo(String fruitName) {
+    public static JsonObject getCatFact(int factID) {
         // Constructing the URL for the API request
-        String url = "https://www.fruityvice.com/api/fruit/" + fruitName;
+        String url = "https://meowfacts.herokuapp.com/?id=" + factID;
+
 
         // Create an HTTP client object
         HttpClient client = HttpClient.newHttpClient();
